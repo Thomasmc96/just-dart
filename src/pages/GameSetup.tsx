@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { GameContext } from "../contexts/GameContext";
+import Button from "../components/Button";
 
 export default function GameSetup() {
   const { gameState, addPlayer, setStartingPoints } = useContext(GameContext);
@@ -64,6 +65,8 @@ export default function GameSetup() {
         />
         <label htmlFor="gameType501">501</label>
       </div>
+
+      <Button>Start spil</Button>
     </main>
   );
 }

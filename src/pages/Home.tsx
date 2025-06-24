@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Button from "../components/Button";
 
 const Home = () => {
   return (
@@ -11,9 +12,7 @@ const Home = () => {
       </p>
       <div className="flex gap-4 flex-wrap justify-center">
         <Link to={"game-setup"}>
-          <button className="bg-green-400 hover:bg-green-500 text-gray-900 px-6 py-3 rounded-lg font-semibold transition cursor-pointer">
-            Opret spil
-          </button>
+          <Button>Opret spil</Button>
         </Link>
       </div>
     </main>
