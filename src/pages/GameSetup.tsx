@@ -12,6 +12,10 @@ export default function GameSetup() {
     setNewPlayer("");
   };
 
+  const startGame = () => {
+    console.log("start");
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center pt-10 bg-gray-900 text-gray-100 px-6">
       <h1 className="text-4xl font-bold mb-8 text-green-400">Opret spil</h1>
@@ -66,7 +70,7 @@ export default function GameSetup() {
         <label htmlFor="gameType501">501</label>
       </div>
 
-      <Button>Start spil</Button>
+      <Button onClick={startGame}>Start spil</Button>
     </main>
   );
 }
