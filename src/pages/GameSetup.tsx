@@ -1,11 +1,18 @@
 import { useContext, useState } from "react";
 import { GameContext } from "../contexts/GameContext";
 import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function GameSetup() {
-  const { gameState, addPlayer, setStartingPoints } = useContext(GameContext);
+  const navigate = useNavigate();
 
-  const [newPlayer, setNewPlayer] = useState("");
+  const { gameState, addPlayer, addStartingPoints } = useContext(GameContext);
+
+  const [newPlayer, setNewPlayer] = useState<string>("");
+
+  const [error, setError] = useState<string>("");
+
+  console.log(gameState);
 
   const onAddNewPlayer = () => {
     addPlayer(newPlayer);
@@ -13,6 +20,15 @@ export default function GameSetup() {
   };
 
   const startGame = () => {
+    if (gameState.players.length === 0) {
+      setError("Der er ikke tilføjet nogle spillere");
+      return;
+    }
+    if (gameState.startingPoints === 0) {
+      setError("Vælg en start score");
+      return;
+    }
+    navigate("/game");
     console.log("start");
   };
 
@@ -49,26 +65,31 @@ export default function GameSetup() {
           name="gameType"
           id="gameType121"
           value={"121"}
-          onInput={(e) => setStartingPoints(Number(e.currentTarget.value))}
+          checked={gameState.startingPoints === 121}
+          onChange={(e) => addStartingPoints(Number(e.currentTarget.value))}
         />
         <label htmlFor="gameType121">121</label>
         <input
           type="radio"
           name="gameType"
           id="gameType301"
-          value={"301"}
-          onInput={(e) => setStartingPoints(Number(e.currentTarget.value))}
+          value={301}
+          checked={gameState.startingPoints === 301}
+          onChange={(e) => addStartingPoints(Number(e.currentTarget.value))}
         />
         <label htmlFor="gameType301">301</label>
         <input
           type="radio"
           name="gameType"
           id="gameType501"
-          value={"501"}
-          onInput={(e) => setStartingPoints(Number(e.currentTarget.value))}
+          value={501}
+          checked={gameState.startingPoints === 501}
+          onChange={(e) => addStartingPoints(Number(e.currentTarget.value))}
         />
         <label htmlFor="gameType501">501</label>
       </div>
+
+      {error && <p className="text-red-600">{error}</p>}
 
       <Button onClick={startGame}>Start spil</Button>
     </main>

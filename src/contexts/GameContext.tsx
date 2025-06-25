@@ -5,9 +5,11 @@ export type Player = {
   id: string;
   name: string;
   score: number;
+  darts_left: number;
 };
 export type GameState = {
   players: Player[];
+  playerTurn: number;
   round: number;
   startingPoints: number;
 };
@@ -16,18 +18,19 @@ type GameContextType = {
   gameState: GameState;
   setGameState: React.Dispatch<React.SetStateAction<GameState>>;
   addPlayer: (name: string) => void;
-  setStartingPoints: (startingPoints: number) => void;
+  addStartingPoints: (startingPoints: number) => void;
 };
 
 export const GameContext = createContext<GameContextType>({
   gameState: {
     players: [],
+    playerTurn: 0,
     round: 0,
     startingPoints: 0,
   },
   setGameState: () => {},
   addPlayer: () => {},
-  setStartingPoints: () => {},
+  addStartingPoints: () => {},
 });
 
 type GameProviderProps = {
@@ -37,6 +40,7 @@ type GameProviderProps = {
 export const GameProvider = ({ children }: GameProviderProps) => {
   const [gameState, setGameState] = useState<GameState>({
     players: [],
+    playerTurn: 0,
     round: 0,
     startingPoints: 0,
   });
@@ -52,12 +56,13 @@ export const GameProvider = ({ children }: GameProviderProps) => {
           id: id,
           name,
           score: prev.startingPoints,
+          darts_left: 3,
         },
       ],
     }));
   };
 
-  const setStartingPoints = (startingPoints: number) => {
+  const addStartingPoints = (startingPoints: number) => {
     setGameState((prev) => ({
       ...prev,
       startingPoints: startingPoints,
@@ -66,7 +71,7 @@ export const GameProvider = ({ children }: GameProviderProps) => {
 
   return (
     <GameContext.Provider
-      value={{ gameState, setGameState, addPlayer, setStartingPoints }}
+      value={{ gameState, setGameState, addPlayer, addStartingPoints }}
     >
       {children}
     </GameContext.Provider>
