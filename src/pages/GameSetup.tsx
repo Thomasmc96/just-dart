@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 export default function GameSetup() {
   const navigate = useNavigate();
 
-  const { gameState, addPlayer, addStartingPoints } = useContext(GameContext);
+  const { gameState, addPlayer, addStartingPoints, startGame } =
+    useContext(GameContext);
 
   const [newPlayer, setNewPlayer] = useState<string>("");
 
@@ -19,7 +20,7 @@ export default function GameSetup() {
     setNewPlayer("");
   };
 
-  const startGame = () => {
+  const onStartGame = () => {
     if (gameState.players.length === 0) {
       setError("Der er ikke tilføjet nogle spillere");
       return;
@@ -28,8 +29,9 @@ export default function GameSetup() {
       setError("Vælg en start score");
       return;
     }
+
+    startGame();
     navigate("/game");
-    console.log("start");
   };
 
   return (
@@ -43,7 +45,7 @@ export default function GameSetup() {
         <h2 className="text-green-400">Spillere</h2>
         <div>
           {gameState.players.map((player) => (
-            <p>{player.name}</p>
+            <p key={player.id}>{player.name}</p>
           ))}
         </div>
         <p>Tilføj spiller:</p>
@@ -91,7 +93,7 @@ export default function GameSetup() {
 
       {error && <p className="text-red-600">{error}</p>}
 
-      <Button onClick={startGame}>Start spil</Button>
+      <Button onClick={onStartGame}>Start spil</Button>
     </main>
   );
 }
