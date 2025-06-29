@@ -13,8 +13,6 @@ export default function GameSetup() {
 
   const [error, setError] = useState<string>("");
 
-  console.log(gameState);
-
   const onAddNewPlayer = () => {
     addPlayer(newPlayer);
     setNewPlayer("");

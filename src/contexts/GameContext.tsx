@@ -102,6 +102,8 @@ export const GameProvider = ({ children }: GameProviderProps) => {
       players: prev.players.map((player) => ({
         ...player,
         score: prev.startingPoints,
+        darts_left: 3,
+        roundScore: 0,
       })),
     }));
   };

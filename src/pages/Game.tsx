@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
-import { GameContext, type GameState } from "../contexts/GameContext";
+import { GameContext } from "../contexts/GameContext";
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
 
 export default function Game() {
-  const { gameState, registerScore, startGame } = useContext(GameContext);
+  const { gameState, registerScore } = useContext(GameContext);
 
   const [multiplier, setMultiplier] = useState<number>(1);
 
@@ -112,7 +112,6 @@ export default function Game() {
 const GameFinished = () => {
   const { gameState, startGame } = useContext(GameContext);
 
-  console.log(gameState);
   return (
     <div className="flex min-h-screen flex-col items-center justify-center text-center">
       <h1 className="text-4xl font-bold mb-8 text-green-400">
