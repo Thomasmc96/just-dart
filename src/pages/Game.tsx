@@ -37,19 +37,18 @@ export default function Game() {
       {gameState.winner !== null && <GameFinished />}
       {gameState.winner === null && (
         <>
-          <h1 className="text-4xl font-bold mb-8 text-green-400">
-            {gameState.startingPoints}
-          </h1>
-          <div className="flex flex-row justify-around w-full items-center">
+          <div className="flex flex-wrap justify-center gap-6 w-full mb-6">
             {gameState.players.map((player, i) => (
               <div
                 key={player.id}
-                className={
-                  gameState.playerTurn === i ? "text-2xl text-green-400" : ""
-                }
+                className={`flex flex-col items-center border rounded-lg p-4 min-w-[120px] ${
+                  gameState.playerTurn === i
+                    ? "border-green-500 bg-green-900/20 text-green-400 scale-105"
+                    : "border-gray-600 bg-gray-800"
+                } transition-all`}
               >
-                <p>{player.name}</p>
-                <p>{player.score}</p>
+                <p className="text-lg font-semibold">{player.name}</p>
+                <p className="text-2xl font-bold">{player.score}</p>
               </div>
             ))}
           </div>
