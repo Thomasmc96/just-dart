@@ -23,6 +23,7 @@ type GameContextType = {
   addStartingPoints: (startingPoints: number) => void;
   startGame: () => void;
   registerScore: (score: number) => void;
+  removePlayer: (id: string) => void;
 };
 
 export const GameContext = createContext<GameContextType>({
@@ -38,6 +39,7 @@ export const GameContext = createContext<GameContextType>({
   addStartingPoints: () => {},
   startGame: () => {},
   registerScore: () => {},
+  removePlayer: () => {},
 });
 
 type GameProviderProps = {
@@ -179,6 +181,21 @@ export const GameProvider = ({ children }: GameProviderProps) => {
     });
   };
 
+  const removePlayer = (id: string) => {
+    setGameState((prev) => {
+      const updatedPlayers = prev.players.filter((player) => player.id !== id);
+
+      const newPlayerTurn =
+        prev.playerTurn >= updatedPlayers.length ? 0 : prev.playerTurn;
+
+      return {
+        ...prev,
+        players: updatedPlayers,
+        playerTurn: newPlayerTurn,
+      };
+    });
+  };
+
   return (
     <GameContext.Provider
       value={{
@@ -188,6 +205,7 @@ export const GameProvider = ({ children }: GameProviderProps) => {
         addStartingPoints,
         startGame,
         registerScore,
+        removePlayer,
       }}
     >
       {children}
