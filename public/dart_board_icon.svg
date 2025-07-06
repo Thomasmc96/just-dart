@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Outer ring -->
+  <circle cx="32" cy="32" r="30" fill="#1a202c" stroke="#e53e3e" stroke-width="4"></circle>
+  <!-- Middle ring -->
+  <circle cx="32" cy="32" r="20" fill="#4a5568"></circle>
+  <!-- Bullseye -->
+  <circle cx="32" cy="32" r="8" fill="#e53e3e"></circle>
+</svg>
