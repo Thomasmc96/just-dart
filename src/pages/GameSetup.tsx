@@ -19,10 +19,6 @@ export default function GameSetup() {
     setNewPlayer("");
   };
 
-  const onRemovePlayer = (id: string) => {
-    removePlayer(id);
-  };
-
   const onStartGame = () => {
     if (gameState.players.length === 0) {
       setError("Der er ikke tilføjet nogle spillere");
