@@ -29,7 +29,7 @@ export default function GameSetup() {
       return;
     }
 
-    startGame();
+    startGame(true);
     navigate("/game");
   };
 

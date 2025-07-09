@@ -7,6 +7,7 @@ export type Player = {
   score: number;
   roundScore: number;
   darts_left: number;
+  wins: number;
 };
 export type GameState = {
   players: Player[];
@@ -21,7 +22,7 @@ type GameContextType = {
   setGameState: React.Dispatch<React.SetStateAction<GameState>>;
   addPlayer: (name: string) => void;
   addStartingPoints: (startingPoints: number) => void;
-  startGame: () => void;
+  startGame: (resetWins: boolean) => void;
   registerScore: (score: number) => void;
   removePlayer: (id: string) => void;
 };
@@ -81,6 +82,7 @@ export const GameProvider = ({ children }: GameProviderProps) => {
           score: prev.startingPoints,
           roundScore: 0,
           darts_left: 3,
+          wins: 0,
         },
       ],
     }));
@@ -97,7 +99,7 @@ export const GameProvider = ({ children }: GameProviderProps) => {
     }));
   };
 
-  const startGame = () => {
+  const startGame = (resetWins: boolean = false) => {
     setGameState((prev) => ({
       ...prev,
       winner: null,
@@ -106,6 +108,7 @@ export const GameProvider = ({ children }: GameProviderProps) => {
         score: prev.startingPoints,
         darts_left: 3,
         roundScore: 0,
+        wins: resetWins ? 0 : player.wins,
       })),
     }));
   };
@@ -117,9 +120,19 @@ export const GameProvider = ({ children }: GameProviderProps) => {
       const newScore = currentScore - score;
 
       if (newScore === 0) {
+        const updatedPlayers = prev.players.map((player, index) => {
+          if (index === prev.playerTurn) {
+            return {
+              ...player,
+              wins: player.wins + 1,
+            };
+          }
+          return player;
+        });
         return {
           ...prev,
           winner: currentPlayer,
+          players: updatedPlayers,
         };
       }
 

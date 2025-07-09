@@ -51,12 +51,17 @@ export default function Game() {
             {gameState.players.map((player, i) => (
               <div
                 key={player.id}
-                className={`flex flex-col items-center border rounded-lg p-4 min-w-[120px] ${
+                className={`relative flex flex-col items-center border rounded-lg p-4 min-w-[120px] ${
                   gameState.playerTurn === i
                     ? "border-green-500 bg-green-900/20 text-green-400 scale-105"
                     : "border-gray-600 bg-gray-800"
                 } transition-all`}
               >
+                {player.wins > 0 && (
+                  <p className="absolute top-1 right-1 text-white text-xs">
+                    {player.wins > 1 && player.wins}👑
+                  </p>
+                )}
                 <p className="text-lg font-semibold">{player.name}</p>
                 <p className="text-2xl font-bold">{player.score}</p>
                 {gameState.playerTurn === i && (
@@ -154,7 +159,7 @@ const GameFinished = () => {
         <Link to={"/game-setup"}>
           <Button>Gå tilbage</Button>
         </Link>
-        <Button onClick={startGame}>Nyt spil</Button>
+        <Button onClick={() => startGame(false)}>Nyt spil</Button>
       </div>
     </div>
   );
