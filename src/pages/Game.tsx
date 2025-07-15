@@ -36,7 +36,7 @@ export default function Game() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center pt-10 bg-gray-900 text-gray-100 px-3">
+    <main className="flex min-h-screen flex-col justify-center items-center bg-gray-900 text-gray-100 px-3">
       <Link
         to="/game-setup"
         className="absolute top-4 left-4 text-gray-300 hover:text-white transition-colors"
@@ -51,7 +51,11 @@ export default function Game() {
             {gameState.players.map((player, i) => (
               <div
                 key={player.id}
-                className={`relative flex flex-col items-center border rounded-lg p-4 min-w-[120px] ${
+                className={`relative flex flex-col items-center border rounded-lg ${
+                  gameState.players.length <= 2
+                    ? " p-4 min-w-[120px]"
+                    : "p-2 min-w-25"
+                } ${
                   gameState.playerTurn === i
                     ? "border-green-500 bg-green-900/20 text-green-400 scale-105"
                     : "border-gray-600 bg-gray-800"
@@ -62,17 +66,19 @@ export default function Game() {
                     {player.wins > 1 && player.wins}👑
                   </p>
                 )}
-                <p className="text-lg font-semibold">{player.name}</p>
-                <p className="text-2xl font-bold">{player.score}</p>
-                {gameState.playerTurn === i && (
-                  <p className="text-sm mt-1">
-                    {"🎯".repeat(player.darts_left)}
-                  </p>
-                )}
+                <p className="text-sm font-semibold">
+                  {player.name.slice(0, 8)}
+                </p>
+                <p className="text-xl font-bold">{player.score}</p>
+                <p className="text-xs mt-1">
+                  {player.scores.map((score) => (
+                    <>{score} </>
+                  ))}
+                  {"🎯".repeat(3 - player.scores.length)}
+                </p>
               </div>
             ))}
           </div>
-
           <div className="flex flex-row w-full m-5 justify-around">
             <div>
               <input
@@ -86,7 +92,7 @@ export default function Game() {
               />
               <label
                 htmlFor="addScoreUpDouble"
-                className="border-solid border-1 w-18 h-18 mt-4 mr-4 rounded-lg flex justify-center items-center border-gray-600 bg-gray-800 hover:bg-gray-700 peer-checked:text-red-500 peer-checked:border-red-500"
+                className="border-solid border-1 w-16 h-16 mt-4 mr-4 rounded-lg flex justify-center items-center border-gray-600 bg-gray-800 hover:bg-gray-700 peer-checked:text-red-500 peer-checked:border-red-500"
               >
                 Double
               </label>
@@ -103,7 +109,7 @@ export default function Game() {
               />
               <label
                 htmlFor="addScoreUpTriple"
-                className="border-solid border-1 w-18 h-18 mt-4 mr-4 rounded-lg flex justify-center items-center border-gray-600 bg-gray-800 hover:bg-gray-700 peer-checked:text-red-500 peer-checked:border-red-500"
+                className="border-solid border-1 w-16 h-16 mt-4 mr-4 rounded-lg flex justify-center items-center border-gray-600 bg-gray-800 hover:bg-gray-700 peer-checked:text-red-500 peer-checked:border-red-500"
               >
                 Triple
               </label>

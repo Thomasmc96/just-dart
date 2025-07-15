@@ -6,7 +6,7 @@ export type Player = {
   name: string;
   score: number;
   roundScore: number;
-  darts_left: number;
+  scores: number[];
   wins: number;
 };
 export type GameState = {
@@ -81,7 +81,7 @@ export const GameProvider = ({ children }: GameProviderProps) => {
           name,
           score: prev.startingPoints,
           roundScore: 0,
-          darts_left: 3,
+          scores: [],
           wins: 0,
         },
       ],
@@ -106,7 +106,7 @@ export const GameProvider = ({ children }: GameProviderProps) => {
       players: prev.players.map((player) => ({
         ...player,
         score: prev.startingPoints,
-        darts_left: 3,
+        scores: [],
         roundScore: 0,
         wins: resetWins ? 0 : player.wins,
       })),
@@ -140,17 +140,19 @@ export const GameProvider = ({ children }: GameProviderProps) => {
       if (newScore < 0) {
         const nextPlayerTurn = (prev.playerTurn + 1) % prev.players.length;
 
-        const updatedPlayers = prev.players.map((player, index) => {
+        let updatedPlayers = prev.players.map((player, index) => {
           if (index === prev.playerTurn) {
             return {
               ...player,
               score: player.score + player.roundScore,
               roundScore: 0,
-              darts_left: 3,
+              scores: [...player.scores, score],
             };
           }
           return player;
         });
+
+        updatedPlayers[nextPlayerTurn].scores = [];
 
         return {
           ...prev,
@@ -160,13 +162,13 @@ export const GameProvider = ({ children }: GameProviderProps) => {
         };
       }
 
-      const updatedPlayers = prev.players.map((player, index) => {
+      let updatedPlayers = prev.players.map((player, index) => {
         if (index === prev.playerTurn) {
           return {
             ...player,
             score: player.score - score,
             roundScore: player.roundScore + score,
-            darts_left: player.darts_left - 1,
+            scores: [...player.scores, score],
           };
         }
         return player;
@@ -175,14 +177,16 @@ export const GameProvider = ({ children }: GameProviderProps) => {
       let nextPlayerTurn = prev.playerTurn;
       let nextRound = prev.round;
 
-      if (currentPlayer.darts_left === 1) {
-        updatedPlayers[prev.playerTurn].darts_left = 3;
+      if (currentPlayer.scores.length === 2) {
+        // updatedPlayers[prev.playerTurn].darts_left = 3;
         updatedPlayers[prev.playerTurn].roundScore = 0;
         nextPlayerTurn = (prev.playerTurn + 1) % updatedPlayers.length; // loop back i 1+1 % 2 = 0
 
         if (nextPlayerTurn === 0) {
           nextRound += 1;
         }
+
+        updatedPlayers[nextPlayerTurn].scores = [];
       }
 
       return {
