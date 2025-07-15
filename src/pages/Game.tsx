@@ -36,7 +36,7 @@ export default function Game() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col justify-center items-center bg-gray-900 text-gray-100 px-3">
+    <main className="flex min-h-screen flex-col pt-4 items-center bg-gray-900 text-gray-100 px-3">
       <Link
         to="/game-setup"
         className="absolute top-4 left-4 text-gray-300 hover:text-white transition-colors"
@@ -66,7 +66,7 @@ export default function Game() {
                     {player.wins > 1 && player.wins}👑
                   </p>
                 )}
-                <p className="text-sm font-semibold">
+                <p className="text-md font-semibold">
                   {player.name.slice(0, 8)}
                 </p>
                 <p className="text-xl font-bold">{player.score}</p>
@@ -92,7 +92,7 @@ export default function Game() {
               />
               <label
                 htmlFor="addScoreUpDouble"
-                className="border-solid border-1 w-16 h-16 mt-4 mr-4 rounded-lg flex justify-center items-center border-gray-600 bg-gray-800 hover:bg-gray-700 peer-checked:text-red-500 peer-checked:border-red-500"
+                className="border-solid border-1 w-16 h-16 mt-4 rounded-lg flex justify-center items-center border-gray-600 bg-gray-800 hover:bg-gray-700 peer-checked:text-red-500 peer-checked:border-red-500"
               >
                 Double
               </label>
@@ -109,7 +109,7 @@ export default function Game() {
               />
               <label
                 htmlFor="addScoreUpTriple"
-                className="border-solid border-1 w-16 h-16 mt-4 mr-4 rounded-lg flex justify-center items-center border-gray-600 bg-gray-800 hover:bg-gray-700 peer-checked:text-red-500 peer-checked:border-red-500"
+                className="border-solid border-1 w-16 h-16 mt-4 rounded-lg flex justify-center items-center border-gray-600 bg-gray-800 hover:bg-gray-700 peer-checked:text-red-500 peer-checked:border-red-500"
               >
                 Triple
               </label>
@@ -120,7 +120,7 @@ export default function Game() {
               <button
                 key={scoreInput}
                 type="button"
-                className={`w-18 h-18 m-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-gray-700 active:bg-green-600 active:scale-95 transition-all duration-150 text-lg font-bold`}
+                className={`w-17 h-17 m-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-gray-700 active:bg-green-600 active:scale-95 transition-all duration-150 text-lg font-bold`}
                 value={scoreInput}
                 onClick={onRegisterScore}
               >
